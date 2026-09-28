@@ -1,0 +1,67 @@
+========================================================================
+ STARC adaptive-emissivity radiator: first-order heater-power study
+========================================================================
+ Generated 2026-09-28 15:37
+
+ *** FIRST-ORDER PUBLIC-DATA ESTIMATE. NOT VALIDATED AGAINST STARC ***
+ *** TEST DATA. One-node model; see README.md for all limitations. ***
+
+ SCENARIO
+   LEO orbit 95 min (60 min sun, 35 min eclipse); F_sun 0.25, F_earth 0.30
+   Hot case  Q_int 250 W (sun) / 250 W (eclipse); radiator sized so peak = 40 C
+   Cold case Q_int 50 W (sun) / 50 W (eclipse); heater holds T >= -10 C
+   STARC eps 0.20 -> 0.92, T_t = 10 C, w = 4 K, alpha 0.10
+
+ 1. RADIATOR AREA AND COLD-CASE HEATER DEMAND (dt = 1 s)
+   Coating      Area m2 Area ft2  Heater Wh/o  eclipse Wh   Peak W   Avg W  Cold T range
+   Glass OSR      0.659     7.10        74.77       38.78     66.5    47.2  -10.0 to -10.0 C
+   Silver FEP     0.753     8.11        72.74       39.64     67.9    45.9  -10.0 to -10.0 C
+   STARC          0.628     6.76         0.00        0.00      0.0     0.0  4.5 to 7.2 C
+
+ 2. WHAT STARC SAVES
+   vs Glass OSR  (baseline)
+     Heater energy saved              74.8 Wh per orbit
+     Heater power saved               47.2 W orbit-average, 66.5 W peak
+     = equivalent eclipse watts      105.6 W  (paper Step 2 unit)
+     Battery mass saved                259 g
+     Solar-array mass saved           1360 g
+     Total mass saved                 1619 g  (launch only: $11,330 at $7,000/kg)
+     Value at $150-$800 per W      $15,840 - $84,500 per spacecraft
+     Per sq ft of STARC radiator  $2,340 - $12,490  (15.6 W/sq ft; paper credits 3 W/sq ft)
+     Radiator area saved               4.7 %
+   vs Silver FEP
+     Heater energy saved              72.7 Wh per orbit
+     Heater power saved               45.9 W orbit-average, 67.9 W peak
+     = equivalent eclipse watts      103.9 W  (paper Step 2 unit)
+     Battery mass saved                264 g
+     Solar-array mass saved           1329 g
+     Total mass saved                 1593 g  (launch only: $11,150 at $7,000/kg)
+     Value at $150-$800 per W      $15,590 - $83,160 per spacecraft
+     Per sq ft of STARC radiator  $2,310 - $12,300  (15.4 W/sq ft; paper credits 3 W/sq ft)
+     Radiator area saved              16.6 %
+
+ 3. TRANSITION-TEMPERATURE SWEEP
+   Best T_t for this mission: 2 C  (saves 74.7 Wh/orbit vs Glass OSR, area 0.628 m2).
+   Good window: T_t = -6 to 10 C (heater saving within 0.5% of max and
+   radiator within 0.1% of the smallest); best = centre of that window.
+   Too low a T_t keeps eps high when cold (heater still needed); too high
+   a T_t leaves eps low when hot, so the radiator must grow.
+
+ 4. MONTE CARLO (500 paired runs vs Glass OSR)
+   Uncertain: w 2-8 K, eps_c 0.15-0.30, eps_h 0.85-0.95, Q_int x0.8-1.2,
+   alpha change -0.02 to +0.08 (uniform distributions).
+   Heater watts saved (eclipse-W)   P10 66.1   P50 102.5   P90 135.8 W
+   Value at $150/W                  P10 $9,920  P50 $15,380  P90 $20,360
+   Value at $800/W                  P10 $52,910  P50 $82,030  P90 $108,600
+   Radiator area saved              P10 -3.2%  P50 2.2%  P90 6.6%
+
+ 5. NUMERICAL CHECKS
+   Periodic energy closure, last orbit: max |in-out|/out = 8.2e-11 (hot), 1.5e-09 (cold)
+   dt = 5 s vs 1 s: area differs by 0.000%, heater energy by 0.040% of max
+   Periodic solves converged: yes;  sizing converged: yes;  Monte Carlo: yes
+   Run time 29 s
+
+ Heater watts are expressed in the white paper's unit: the battery + array
+ mass of 1 W held through the 35 min eclipse (~15.3 g). $ values apply the
+ paper's $150 (constellation) to $800 (science) per watt; they are gross
+ savings, before the price difference of STARC vs the incumbent coating.
